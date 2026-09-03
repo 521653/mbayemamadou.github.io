@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mamadou Mbaye - IA, TAL & Vision par ordinateur</title>
+<meta name="description" content="Portfolio de Mamadou Mbaye, étudiant en M2 Informatique spécialisé en Intelligence Artificielle, à la recherche d'un stage de fin d'études.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:      #ffffff;
+    --ink:     #111111;
+    --grey:    #6b6b6b;
+    --grey-2:  #b3b0a8;
+    --line:    #e6e4de;
+    --red:     #e8322a;
+    --red-dark:#a91f18;
+    --panel:   #faf9f6;
+    --spine:   56px;
+    --radius:  2px;
+    --wrap:    1040px;
+    --display: 'Fraunces', Georgia, serif;
+    --sans:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; }
+  ::selection{ background:var(--red); color:#fff; }
+  :focus-visible{ outline:2px solid var(--red); outline-offset:3px; }
+
+  /* ---------- spine ---------- */
+  .spine{
+    position:fixed; top:0; left:0; bottom:0; width:var(--spine);
+    background:var(--red); z-index:30;
+    display:flex; align-items:flex-end; justify-content:center; padding-bottom:28px;
+  }
+  .spine span{
+    writing-mode:vertical-rl; transform:rotate(180deg);
+    color:#fff; font-family:var(--display); font-weight:700;
+    font-size:0.78rem; letter-spacing:0.06em; white-space:nowrap;
+  }
+  @media (max-width:760px){
+    :root{ --spine:0px; }
+    .spine{ position:static; width:100%; height:6px; padding:0; }
+    .spine span{ display:none; }
+  }
+
+  .site{ margin-left:var(--spine); }
+  .wrap{ max-width:var(--wrap); margin:0 auto; padding:0 40px; }
+  @media (max-width:640px){ .wrap{ padding:0 22px; } }
+
+  /* ---------- nav ---------- */
+  header.topnav{
+    position:sticky; top:0; z-index:20;
+    background:rgba(255,255,255,0.9); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav .wrap{
+    display:flex; align-items:center; justify-content:flex-end;
+    height:64px; gap:28px;
+  }
+  .navlinks{ display:flex; gap:28px; font-size:0.9rem; margin-right:auto; }
+  @media (max-width:720px){ .navlinks{ display:none; } }
+  .navlinks a{ text-decoration:none; color:var(--ink); position:relative; padding-bottom:3px; }
+  .navlinks a::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
+    background:var(--red); transform:scaleX(0); transform-origin:left;
+    transition:transform .2s ease;
+  }
+  .navlinks a:hover::after, .navlinks a:focus-visible::after{ transform:scaleX(1); }
+  .nav-cta{
+    font-size:0.86rem; font-weight:600; text-decoration:none; background:var(--red); color:#fff;
+    padding:9px 18px; border-radius:var(--radius); white-space:nowrap;
+    transition:background .15s ease;
+  }
+  .nav-cta:hover{ background:var(--red-dark); }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:88px 0 60px; position:relative; }
+  @media (max-width:640px){ .hero{ padding:52px 0 44px; } }
+  .hero-grid{ display:grid; grid-template-columns:7fr 5fr; gap:24px; align-items:start; }
+  @media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; } }
+  .hero p.kicker{ font-size:0.98rem; color:var(--grey); margin:0 0 18px; }
+  .hero h1{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(2rem, 4.8vw, 3.6rem);
+    line-height:1.06; letter-spacing:-0.01em; margin:0;
+  }
+  .hero-actions{ display:flex; gap:16px; margin-top:36px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--sans); font-weight:600; font-size:0.92rem;
+    padding:14px 26px; border-radius:var(--radius); text-decoration:none;
+    display:inline-block; border:1px solid var(--ink);
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+    cursor:pointer; background:none; color:var(--ink);
+  }
+  .btn.fill{ background:var(--ink); color:#fff; }
+  .btn.fill:hover{ background:var(--red); border-color:var(--red); }
+  .btn:not(.fill):hover{ border-color:var(--red); color:var(--red); }
+  .btn.small{ padding:9px 16px; font-size:0.82rem; }
+
+  .stamp{
+    border:1.5px solid var(--red); color:var(--red); border-radius:6px;
+    padding:22px 22px; transform:rotate(-3deg);
+    font-family:var(--display); font-weight:700; font-size:0.95rem;
+    text-align:center; max-width:230px; margin-left:auto;
+  }
+  .stamp small{ display:block; font-family:var(--sans); font-weight:500; color:var(--grey); font-size:0.72rem; margin-top:6px; letter-spacing:0.02em; }
+  @media (max-width:820px){ .stamp{ margin:28px 0 0; transform:rotate(-2deg); } }
+
+  .r{ opacity:0; transform:translateY(8px); animation:r .6s ease forwards; }
+  .r.d2{ animation-delay:.1s; } .r.d3{ animation-delay:.2s; } .r.d4{ animation-delay:.3s; }
+  @keyframes r{ to{ opacity:1; transform:none; } }
+
+  /* ---------- section shell ---------- */
+  section{ padding:76px 0; border-top:1px solid var(--line); }
+  @media (max-width:640px){ section{ padding:52px 0; } }
+  .sec-head{ margin-bottom:44px; max-width:60ch; }
+  .sec-head h2{ font-family:var(--display); font-weight:700; font-size:1.85rem; margin:0 0 10px; }
+  .sec-head p{ color:var(--grey); margin:0; font-size:0.95rem; }
+
+  /* ---------- projets : zigzag case studies ---------- */
+  .case{
+    display:grid; grid-template-columns: 1fr 1.15fr; gap:44px; align-items:start;
+    padding:48px 0; border-top:1px solid var(--line);
+  }
+  .case:first-of-type{ border-top:none; padding-top:0; }
+  .case:nth-of-type(even) .case-media{ order:2; }
+  .case:nth-of-type(even) .case-body{ order:1; }
+  @media (max-width:820px){
+    .case{ grid-template-columns:1fr; gap:22px; }
+    .case:nth-of-type(even) .case-media, .case:nth-of-type(even) .case-body{ order:initial; }
+  }
+  .case-num{ font-family:var(--display); font-weight:700; color:var(--red); font-size:0.85rem; margin-bottom:10px; }
+  .case-media{
+    width:100%; aspect-ratio:4/3; object-fit:cover; background:var(--panel);
+    border-radius:4px;
+  }
+  .case-media.empty{
+    display:flex; align-items:center; justify-content:center;
+    color:var(--grey-2); font-size:0.82rem; text-align:center; padding:16px;
+  }
+  .case-top{ display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  .case-title{ font-family:var(--display); font-weight:700; font-size:1.4rem; margin:0; }
+  .case-date{ color:var(--grey); font-size:0.85rem; white-space:nowrap; }
+  .case-grid{ margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:20px 28px; }
+  @media (max-width:520px){ .case-grid{ grid-template-columns:1fr; } }
+  .case-grid h4{ font-size:0.76rem; color:var(--red); margin:0 0 6px; font-weight:700; }
+  .case-grid p{ margin:0; font-size:0.92rem; color:#3b3b3b; }
+  .case-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+  .case-tags span{
+    font-size:0.78rem; border:1px solid var(--line); padding:5px 12px;
+    border-radius:20px; color:var(--grey);
+  }
+  .case-link{ margin-top:18px; display:inline-block; font-size:0.9rem; font-weight:600; color:var(--red); text-decoration:none; border-bottom:1px solid var(--red); }
+  .case-del{ margin-top:16px; }
+
+  .proj-toolbar{ display:flex; justify-content:flex-end; gap:8px; margin-bottom:24px; }
+  .empty-state{ color:var(--grey); font-size:0.92rem; padding:32px 0; }
+
+  /* ---------- formulaire ---------- */
+  .proj-form{ background:var(--panel); padding:32px; border-radius:4px; margin-bottom:40px; display:none; }
+  .proj-form.open{ display:block; }
+  .proj-form h3{ font-family:var(--display); font-size:1.15rem; margin:0 0 20px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:0.82rem; color:var(--grey); margin-bottom:6px; }
+  .field input[type=text], .field input[type=url], .field textarea{
+    width:100%; background:#fff; border:1px solid var(--line); color:var(--ink);
+    padding:11px 13px; font-family:var(--sans); font-size:0.92rem; border-radius:2px;
+  }
+  .field textarea{ resize:vertical; min-height:64px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:560px){ .field-row{ grid-template-columns:1fr; } }
+  .form-actions{ display:flex; gap:12px; margin-top:8px; }
+  .form-hint{ font-size:0.78rem; color:var(--grey-2); margin-top:14px; }
+
+  /* ---------- parcours ---------- */
+  .parcours-grid{ display:grid; grid-template-columns:3fr 2fr; gap:0; }
+  @media (max-width:820px){ .parcours-grid{ grid-template-columns:1fr; } }
+  .parcours-col{ padding-right:44px; }
+  .parcours-col.right{ padding-left:44px; padding-right:0; border-left:1px solid var(--line); }
+  @media (max-width:820px){
+    .parcours-col.right{ border-left:none; padding-left:0; margin-top:44px; border-top:1px solid var(--line); padding-top:44px; }
+  }
+  .parcours-col h3{ font-family:var(--display); font-size:1.05rem; margin:0 0 24px; color:var(--red); }
+  .entry{ margin-bottom:26px; }
+  .entry:last-child{ margin-bottom:0; }
+  .entry .role{ font-weight:600; font-size:0.98rem; }
+  .entry .org{ color:var(--grey); font-size:0.87rem; margin-top:2px; }
+  .entry .dates{ color:var(--grey-2); font-size:0.78rem; margin-top:2px; }
+  .entry ul{ margin:9px 0 0; padding-left:18px; font-size:0.88rem; color:#3b3b3b; }
+  .entry li{ margin-bottom:5px; }
+
+  /* ---------- compétences : nuage de tags en phrase ---------- */
+  .skill-cloud{
+    font-family:var(--display); font-weight:500;
+    font-size:clamp(1.2rem, 2.6vw, 1.7rem); line-height:1.7;
+    max-width:52ch;
+  }
+  .skill-cloud span{
+    color:var(--ink); border-bottom:2px solid var(--line);
+    padding-bottom:2px; transition:border-color .15s ease, color .15s ease;
+  }
+  .skill-cloud span:hover{ border-color:var(--red); color:var(--red); }
+  .skill-cloud .sep{ color:var(--grey-2); font-family:var(--sans); font-weight:400; font-size:1rem; margin:0 2px; border-bottom:none; }
+
+  /* ---------- contact ---------- */
+  .contact-sec{ padding-bottom:60px; position:relative; }
+  .contact-grid{ display:grid; grid-template-columns:7fr 5fr; gap:24px; align-items:start; }
+  @media (max-width:820px){ .contact-grid{ grid-template-columns:1fr; } }
+  .contact-sec h2{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(1.7rem, 4vw, 2.7rem); margin:0 0 18px;
+  }
+  .contact-sec p{ color:var(--grey); font-size:1rem; }
+  .contact-links{ margin-top:32px; display:flex; gap:16px; flex-wrap:wrap; }
+
+  footer{ border-top:1px solid var(--line); padding:26px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  footer .fnote{ font-size:0.82rem; color:var(--grey-2); }
+  footer .flinks{ display:flex; gap:18px; font-size:0.82rem; }
+  footer .flinks a{ text-decoration:none; color:var(--grey); }
+  footer .flinks a:hover{ color:var(--red); }
+</style>
+</head>
+<body>
+
+<div class="spine"><span>MAMADOU MBAYE - PORTFOLIO</span></div>
+
+<div class="site">
+
+<header class="topnav">
+  <div class="wrap">
+    <nav class="navlinks" aria-label="Navigation principale">
+      <a href="#projets">Projets</a>
+      <a href="#parcours">Parcours</a>
+      <a href="#competences">Compétences</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="mailto:az280401@gmail.com">M'écrire</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="kicker r">Caen, France</p>
+          <h1 class="r d2">Étudiant en intelligence artificielle, spécialisé en traitement du langage et vision par ordinateur.</h1>
+          <div class="hero-actions r d3">
+            <a class="btn fill" href="mailto:az280401@gmail.com">M'écrire un email</a>
+            <a class="btn" href="#projets">Voir mes projets</a>
+          </div>
+        </div>
+        <div class="stamp r d4">
+          Disponible
+          <small>Stage de fin d'études · 6 mois · dès 2027</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETS -->
+  <section id="projets">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Projets</h2>
+        <p>Deux réalisations récentes en recherche appliquée et en algorithmique, présentées avec leur contexte et leurs résultats.</p>
+      </div>
+
+      <div class="proj-toolbar">
+        <button class="btn small" id="toggleFormBtn" type="button">Ajouter un projet</button>
+      </div>
+
+      <form class="proj-form" id="projForm">
+        <h3>Nouvelle étude de cas</h3>
+        <div class="field-row">
+          <div class="field">
+            <label for="pTitle">Titre du projet</label>
+            <input type="text" id="pTitle" required placeholder="ex. Détection d'objets pour un système embarqué">
+          </div>
+          <div class="field">
+            <label for="pDate">Période</label>
+            <input type="text" id="pDate" placeholder="ex. Été 2026">
+          </div>
+        </div>
+        <div class="field">
+          <label for="pContext">Contexte</label>
+          <textarea id="pContext" placeholder="Dans quel cadre ce projet a-t-il été mené ?"></textarea>
+        </div>
+        <div class="field">
+          <label for="pGoal">Objectif</label>
+          <textarea id="pGoal" placeholder="Quel problème fallait-il résoudre ?"></textarea>
+        </div>
+        <div class="field">
+          <label for="pActions">Actions</label>
+          <textarea id="pActions" placeholder="Ce que vous avez concrètement fait, avec quels outils."></textarea>
+        </div>
+        <div class="field">
+          <label for="pResults">Résultats</label>
+          <textarea id="pResults" placeholder="Ce que ça a produit ou changé, avec des chiffres si possible."></textarea>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="pTags">Technologies (séparées par des virgules)</label>
+            <input type="text" id="pTags" placeholder="Python, PyTorch, Docker">
+          </div>
+          <div class="field">
+            <label for="pLink">Lien (dépôt, démo, article)</label>
+            <input type="url" id="pLink" placeholder="https://github.com/...">
+          </div>
+        </div>
+        <div class="field">
+          <label for="pImage">Visuel du résultat (capture, graphique, optionnel)</label>
+          <input type="file" id="pImage" accept="image/*">
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn fill small">Enregistrer</button>
+          <button type="button" class="btn small" id="cancelFormBtn">Annuler</button>
+        </div>
+        <p class="form-hint">Les projets sont enregistrés dans ce navigateur. Utilisez « Exporter » pour en garder une copie ou les déplacer vers un autre appareil.</p>
+      </form>
+
+      <div class="proj-toolbar">
+        <button class="btn small" id="exportBtn" type="button">Exporter</button>
+        <button class="btn small" id="importBtn" type="button">Importer</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none;">
+      </div>
+
+      <div id="projList"></div>
+    </div>
+  </section>
+
+  <!-- PARCOURS -->
+  <section id="parcours">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Parcours</h2>
+        <p>Expérience professionnelle et formation, du plus récent au plus ancien.</p>
+      </div>
+      <div class="parcours-grid">
+        <div class="parcours-col">
+          <h3>Expérience</h3>
+          <div class="entry">
+            <div class="role">Stagiaire recherche, Projet 2E2MR</div>
+            <div class="org">Laboratoire GREYC, Université de Caen Normandie</div>
+            <div class="dates">Juin - Juillet 2025</div>
+            <ul>
+              <li>Retranscription automatisée de 8 entretiens vidéo de grimpeurs de haut niveau avec Python et Whisper.</li>
+              <li>LLM en local (Ollama) et prompt engineering pour l'analyse sémiotique du discours.</li>
+              <li>Interface Streamlit pour la visualisation et l'annotation par l'équipe de recherche.</li>
+            </ul>
+          </div>
+          <div class="entry">
+            <div class="role">Stagiaire développeur backend</div>
+            <div class="org">DISI, Ziguinchor</div>
+            <div class="dates">Décembre 2023 - Juin 2024</div>
+            <ul>
+              <li>Backend complet d'une plateforme e-commerce en Java / Spring Boot (produits, commandes).</li>
+              <li>Système d'authentification sous .NET.</li>
+              <li>Suivi de version et collaboration via Git / GitHub.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="parcours-col right">
+          <h3>Formation</h3>
+          <div class="entry">
+            <div class="role">Master 2 Informatique, parcours Grad'School MINMACS</div>
+            <div class="org">Université de Caen Normandie</div>
+            <div class="dates">Depuis septembre 2026</div>
+          </div>
+          <div class="entry">
+            <div class="role">Master 1 Informatique, Algorithmique et Systèmes Intelligents</div>
+            <div class="org">Université de Caen Normandie</div>
+            <div class="dates">Septembre 2025 - Mai 2026</div>
+            <ul>
+              <li>Projet annuel « Dilemme du prisonnier itéré et évolutionnaire » : algorithme génétique en Python.</li>
+            </ul>
+          </div>
+          <div class="entry">
+            <div class="role">Licence Mathématiques, Physique et Informatique, spé. informatique</div>
+            <div class="org">Université Assane Seck de Ziguinchor</div>
+            <div class="dates">Avril 2021 - Avril 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPÉTENCES -->
+  <section id="competences">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Compétences</h2>
+        <p>Ce que je maîtrise et ce que je pratique au quotidien.</p>
+      </div>
+      <p class="skill-cloud">
+        <span>TAL & Whisper</span><span class="sep">·</span><span>Vision par ordinateur</span><span class="sep">·</span><span>LLM en local & Ollama</span><span class="sep">·</span><span>Prompt engineering</span><span class="sep">·</span><span>Algorithmes génétiques</span><span class="sep">·</span><span>Machine learning</span><span class="sep">·</span><span>MLOps</span><span class="sep">·</span><span>Science des données</span><span class="sep">·</span><span>Java & Spring Boot</span><span class="sep">·</span><span>.NET</span><span class="sep">·</span><span>Streamlit</span><span class="sep">·</span><span>Git / GitHub</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-sec">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <h2>Discutons de votre besoin en IA.</h2>
+          <p>Je termine mon M2 et je recherche un stage de fin d'études de 6 mois au sein d'une équipe travaillant sur des systèmes d'IA appliqués, que ce soit en TAL, LLM/RAG ou vision par ordinateur.</p>
+          <div class="contact-links">
+            <a class="btn fill" href="mailto:az280401@gmail.com">az280401@gmail.com</a>
+            <a class="btn" href="tel:+33753033079">+33 7 53 03 30 79</a>
+            <a class="btn" href="https://linkedin.com/in/mbayemamadou" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+        <div class="stamp" style="margin-left:0; margin-top:8px;">
+          FR · EN
+          <small>Français natif, Anglais B2</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="fnote">Mamadou Mbaye, Caen, France</span>
+    <div class="flinks">
+      <a href="mailto:az280401@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/mbayemamadou" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var STORAGE_KEY = "mbaye_portfolio_cases_v3";
+
+  var seed = [
+    {
+      id:"seed-1",
+      title:"Analyse sémiotique de discours de grimpeurs",
+      date:"Juin - Juil. 2025",
+      context:"Stage de recherche de six semaines au laboratoire GREYC, dans le cadre d'une étude sur la planification cognitive de huit grimpeurs de haut niveau en situation réelle.",
+      goal:"Automatiser l'analyse de longues heures d'entretiens vidéo pour repérer des signes hexadiques dans le discours des sportifs.",
+      actions:"Pipeline de retranscription automatique avec Whisper (Python) ; exécution de LLM en local via Ollama et travail de prompt engineering pour l'analyse sémiotique ; interface Streamlit pour l'annotation collaborative.",
+      results:"Outil livré à l'équipe de recherche, utilisé pour visualiser et annoter les résultats sur l'ensemble du corpus d'entretiens.",
+      tags:["Python","Whisper","Ollama","Streamlit"],
+      link:"", image:""
+    },
+    {
+      id:"seed-2",
+      title:"Stratégies évolutionnaires pour le dilemme du prisonnier itéré",
+      date:"2025 - 2026",
+      context:"Extension personnelle d'un projet académique de M1 autour de la théorie des jeux évolutionnaire.",
+      goal:"Comparer la robustesse de plusieurs familles de stratégies face aux stratégies génétiques classiques.",
+      actions:"Implémentation de stratégies par automates à états finis (FSM) et par Color Strategy ; modélisation des interactions par digraphes ; simulation sur plusieurs générations.",
+      results:"Mise en évidence des conditions dans lesquelles les stratégies FSM et Color Strategy surpassent les stratégies génétiques classiques.",
+      tags:["Python","Algorithmes génétiques","FSM","Théorie des jeux"],
+      link:"", image:""
+    }
+  ];
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return seed.slice();
+      var parsed = JSON.parse(raw);
+      return (Array.isArray(parsed) && parsed.length) ? parsed : seed.slice();
+    }catch(e){ return seed.slice(); }
+  }
+  function save(list){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+    catch(e){ alert("Impossible d'enregistrer : stockage plein ou indisponible. Essayez une image plus légère."); }
+  }
+
+  var items = load();
+  var listEl = document.getElementById("projList");
+
+  function esc(s){ var d=document.createElement("div"); d.textContent = s==null? "": s; return d.innerHTML; }
+  function block(label, text){
+    if(!text) return "";
+    return '<div><h4>'+esc(label)+'</h4><p>'+esc(text)+'</p></div>';
+  }
+
+  function render(){
+    listEl.innerHTML = "";
+    if(!items.length){
+      listEl.innerHTML = '<div class="empty-state">Aucun projet pour le moment. Ajoutez votre première étude de cas.</div>';
+      return;
+    }
+    items.forEach(function(p, i){
+      var el = document.createElement("article");
+      el.className = "case";
+      var mediaInner = p.image
+        ? '<img src="'+p.image+'" alt="Résultat du projet : '+esc(p.title)+'" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">'
+        : 'Pas de visuel';
+      var mediaClass = p.image ? "case-media" : "case-media empty";
+      var tags = (p.tags||[]).map(function(t){ return "<span>"+esc(t)+"</span>"; }).join("");
+      var link = p.link ? '<a class="case-link" href="'+esc(p.link)+'" target="_blank" rel="noopener">Voir le dépôt / la démo</a>' : "";
+      var num = String(i+1).padStart(2,"0");
+      el.innerHTML =
+        '<div class="'+mediaClass+'">'+mediaInner+'</div>' +
+        '<div class="case-body">'+
+          '<div class="case-num">Projet '+num+'</div>'+
+          '<div class="case-top">'+
+            '<h3 class="case-title">'+esc(p.title)+'</h3>'+
+            '<span class="case-date">'+esc(p.date||"")+'</span>'+
+          '</div>'+
+          '<div class="case-grid">'+
+            block("Contexte", p.context)+
+            block("Objectif", p.goal)+
+            block("Actions", p.actions)+
+            block("Résultats", p.results)+
+          '</div>'+
+          '<div class="case-tags">'+tags+'</div>'+
+          link+
+          '<div class="case-del"><button class="btn small" data-del="'+p.id+'" type="button">Supprimer</button></div>'+
+        '</div>';
+      listEl.appendChild(el);
+    });
+    listEl.querySelectorAll("[data-del]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        if(!confirm("Supprimer ce projet ?")) return;
+        items = items.filter(function(p){ return p.id !== btn.getAttribute("data-del"); });
+        save(items); render();
+      });
+    });
+  }
+  render();
+
+  var form = document.getElementById("projForm");
+  var toggleFormBtn = document.getElementById("toggleFormBtn");
+  var cancelFormBtn = document.getElementById("cancelFormBtn");
+  toggleFormBtn.addEventListener("click", function(){
+    form.classList.toggle("open");
+    if(form.classList.contains("open")) document.getElementById("pTitle").focus();
+  });
+  cancelFormBtn.addEventListener("click", function(){ form.reset(); form.classList.remove("open"); });
+
+  function fileToDataUrl(file){
+    return new Promise(function(resolve, reject){
+      if(!file){ resolve(""); return; }
+      var r = new FileReader();
+      r.onload = function(){ resolve(r.result); };
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var imgFile = document.getElementById("pImage").files[0];
+    fileToDataUrl(imgFile).then(function(dataUrl){
+      var tags = document.getElementById("pTags").value.split(",").map(function(t){return t.trim();}).filter(Boolean);
+      var np = {
+        id:"p-"+Date.now(),
+        title:document.getElementById("pTitle").value.trim() || "Projet sans titre",
+        date:document.getElementById("pDate").value.trim(),
+        context:document.getElementById("pContext").value.trim(),
+        goal:document.getElementById("pGoal").value.trim(),
+        actions:document.getElementById("pActions").value.trim(),
+        results:document.getElementById("pResults").value.trim(),
+        tags:tags,
+        link:document.getElementById("pLink").value.trim(),
+        image:dataUrl
+      };
+      items.unshift(np);
+      save(items); render();
+      form.reset(); form.classList.remove("open");
+    });
+  });
+
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    var blob = new Blob([JSON.stringify(items,null,2)], {type:"application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = "portfolio-projets.json";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+  var importFile = document.getElementById("importFile");
+  document.getElementById("importBtn").addEventListener("click", function(){ importFile.click(); });
+  importFile.addEventListener("change", function(){
+    var file = importFile.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var parsed = JSON.parse(reader.result);
+        if(!Array.isArray(parsed)) throw new Error("format");
+        items = parsed; save(items); render();
+        alert("Import réussi : "+parsed.length+" projet(s) chargé(s).");
+      }catch(e){ alert("Fichier invalide."); }
+      importFile.value = "";
+    };
+    reader.readAsText(file);
+  });
+})();
+</script>
+
+</body>
+</html>
